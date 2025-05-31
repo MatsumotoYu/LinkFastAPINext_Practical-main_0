@@ -4,7 +4,8 @@ from pydantic import BaseModel
 import requests
 import json
 from db_control import crud, mymodels
-
+import os
+from dotenv import load_dotenv
 
 class Customer(BaseModel):
     customer_id: str
@@ -95,9 +96,12 @@ def get_weather(city: str = Query(..., description="地名を入力してくだ�
     2. OpenWeatherMap APIでその緯度経度の天気を取得
     """
 
-    # 🔑 APIキー（実運用では .env などで管理推奨）
-    OPENCAGE_API_KEY = "1f-----"
-    OPENWEATHER_API_KEY = "db----"
+    # 🔑 APIキー（実運用では .env などで管理推奨）🔽 変更点：APIキーを環境変数から取得
+    OPENCAGE_API_KEY = os.getenv("OPENCAGE_API_KEY")
+    OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
+
+    if not OPENCAGE_API_KEY or not OPENWEATHER_API_KEY:
+        raise HTTPException(status_code=500, detail="APIキーが設定されていません")
 
     # ① 地名から緯度経度を取得（OpenCage API）
     geo_url = f"https://api.opencagedata.com/geocode/v1/json?q={city}&key={OPENCAGE_API_KEY}"
