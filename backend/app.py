@@ -96,8 +96,8 @@ def get_weather(city: str = Query(..., description="地名を入力してくだ�
     """
 
     # 🔑 APIキー（実運用では .env などで管理推奨）
-    OPENCAGE_API_KEY = "1f58073d18dd49de888c4011a7b7aa68"
-    OPENWEATHER_API_KEY = "dbb52f1fb30d0853a9116985b3fbb264"
+    OPENCAGE_API_KEY = "1f-----"
+    OPENWEATHER_API_KEY = "db----"
 
     # ① 地名から緯度経度を取得（OpenCage API）
     geo_url = f"https://api.opencagedata.com/geocode/v1/json?q={city}&key={OPENCAGE_API_KEY}"
